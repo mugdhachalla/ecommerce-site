@@ -1,0 +1,58 @@
+name,description,category,price,image_url,stock,brand,rating
+Men Classic Polo T-Shirt,Soft cotton polo tee with logo print,Men,899,https://picsum.photos/seed/m1/400,45,U.S. Polo,4.20
+Men Slim Fit Jeans,Stretchable denim slim-fit jeans,Men,1899,https://picsum.photos/seed/m2/400,30,Levi's,4.50
+Men Checked Shirt,Button-down cotton checkered shirt,Men,1199,https://picsum.photos/seed/m3/400,50,Arrow,4.10
+Men Leather Belt,Genuine brown leather belt,Men,799,https://picsum.photos/seed/m4/400,40,Van Heusen,4.40
+Men Running Shoes,Breathable mesh running shoes,Men,2499,https://picsum.photos/seed/m5/400,25,Nike,4.60
+Men Casual Sneakers,Stylish low-top sneakers,Men,1999,https://picsum.photos/seed/m6/400,35,Puma,4.30
+Men Formal Trousers,Slim fit formal trousers,Men,2199,https://picsum.photos/seed/m7/400,20,Allen Solly,4.10
+Men Wallet,Genuine leather wallet with coin pouch,Men,699,https://picsum.photos/seed/m8/400,60,WildHorn,4.25
+Men Winter Jacket,Full-sleeve zip-up winter jacket,Men,2999,https://picsum.photos/seed/m9/400,15,Woodland,4.50
+Men Sports Shorts,Quick-dry running shorts,Men,599,https://picsum.photos/seed/m10/400,55,Adidas,4.35
+Women Floral Dress,Summer floral printed dress,Women,1499,https://picsum.photos/seed/w1/400,20,Vero Moda,4.50
+Women Denim Jacket,Blue cropped denim jacket,Women,2499,https://picsum.photos/seed/w2/400,15,Only,4.60
+Women Handbag,Textured leather tote bag,Women,2899,https://picsum.photos/seed/w3/400,25,Caprese,4.40
+Women Sports Shoes,Lightweight training shoes,Women,2299,https://picsum.photos/seed/w4/400,35,Nike,4.55
+Women Leggings,Stretchable high-waist leggings,Women,799,https://picsum.photos/seed/w5/400,50,Forever 21,4.20
+Women Kurti,Printed straight cotton kurti,Women,999,https://picsum.photos/seed/w6/400,40,W,4.30
+Women Flats,Slip-on flat sandals,Women,1199,https://picsum.photos/seed/w7/400,25,Bata,4.10
+Women Evening Gown,Maxi-length gown for special occasions,Women,4599,https://picsum.photos/seed/w8/400,10,Forever New,4.70
+Women Gold Earrings,Gold plated stud earrings,Women,599,https://picsum.photos/seed/w9/400,60,Tanishq,4.80
+Women Perfume,Floral fruity fragrance,Women,1799,https://picsum.photos/seed/w10/400,40,Dior,4.75
+Accessories Sunglasses,UV-protected aviator sunglasses,Accessories,1599,https://picsum.photos/seed/a1/400,50,Ray-Ban,4.60
+Accessories Backpack,Waterproof travel backpack,Accessories,2199,https://picsum.photos/seed/a2/400,30,Wildcraft,4.40
+Accessories Watch,Analog leather-strap wristwatch,Accessories,2599,https://picsum.photos/seed/a3/400,40,Titan,4.55
+Accessories Cap,Adjustable cotton baseball cap,Accessories,499,https://picsum.photos/seed/a4/400,100,Puma,4.25
+Accessories Wallet,Slim leather card holder,Accessories,699,https://picsum.photos/seed/a5/400,80,Fossil,4.30
+Accessories Necklace,Silver-plated pendant necklace,Accessories,1299,https://picsum.photos/seed/a6/400,60,Tanishq,4.70
+Accessories Travel Bag,Spacious duffel travel bag,Accessories,2499,https://picsum.photos/seed/a7/400,25,American Tourister,4.35
+Accessories Keychain,Leather loop keychain,Accessories,299,https://picsum.photos/seed/a8/400,150,Woodland,4.20
+Accessories Perfume Set,3-piece mini perfume kit,Accessories,999,https://picsum.photos/seed/a9/400,70,Calvin Klein,4.50
+Accessories Hair Band,Elastic designer hair band,Accessories,199,https://picsum.photos/seed/a10/400,200,Claire's,4.10
+Men Hoodie,Winter fleece hoodie,Men,1499,https://picsum.photos/seed/m11/400,45,H&M,4.30
+Men Formal Shoes,Leather lace-up office shoes,Men,2799,https://picsum.photos/seed/m12/400,25,Red Tape,4.60
+Men Sports Jacket,Windproof running jacket,Men,1999,https://picsum.photos/seed/m13/400,30,Adidas,4.50
+Men Analog Watch,Silver dial classic watch,Men,2199,https://picsum.photos/seed/m14/400,20,Fastrack,4.45
+Men Cap,Adjustable sports cap,Men,499,https://picsum.photos/seed/m15/400,75,Nike,4.35
+Men Tie,Silk printed tie,Men,799,https://picsum.photos/seed/m16/400,40,Van Heusen,4.20
+Men Socks,Cotton ankle socks pack of 3,Men,399,https://picsum.photos/seed/m17/400,100,Jockey,4.25
+Women Sandals,Block heel open sandals,Women,1599,https://picsum.photos/seed/w11/400,35,Catwalk,4.40
+Women Scarf,Printed silk scarf,Women,999,https://picsum.photos/seed/w12/400,60,Zara,4.30
+Women Bracelet,Gold tone bracelet,Women,499,https://picsum.photos/seed/w13/400,70,Tanishq,4.60
+Women Hat,Wide brim sun hat,Women,699,https://picsum.photos/seed/w14/400,40,Accessorize,4.20
+Women Tote Bag,Leather tote handbag,Women,2399,https://picsum.photos/seed/w15/400,20,Charles & Keith,4.55
+Women Top,Georgette printed top,Women,999,https://picsum.photos/seed/w16/400,50,Only,4.35
+Women Maxi Dress,Bohemian print maxi dress,Women,1799,https://picsum.photos/seed/w17/400,25,Forever 21,4.45
+Women Loafers,Suede casual loafers,Women,1999,https://picsum.photos/seed/w18/400,30,Catwalk,4.25
+Women Cardigan,Soft knit open-front cardigan,Women,1899,https://picsum.photos/seed/w19/400,20,Zara,4.50
+Women Watch,Rose gold analog watch,Women,2999,https://picsum.photos/seed/w20/400,25,Titan,4.70
+Accessories Smartwatch,Touchscreen smartwatch,Accessories,4999,https://picsum.photos/seed/a11/400,15,Noise,4.65
+Accessories Earbuds,Bluetooth wireless earbuds,Accessories,2999,https://picsum.photos/seed/a12/400,25,Boat,4.50
+Accessories Bracelet Watch,Gold chain analog watch,Accessories,2599,https://picsum.photos/seed/a13/400,30,Titan,4.55
+Accessories Travel Wallet,Passport holder wallet,Accessories,1299,https://picsum.photos/seed/a14/400,40,Samsonite,4.40
+Accessories Sunglasses,Fashion oval frame sunglasses,Accessories,1599,https://picsum.photos/seed/a15/400,60,Ray-Ban,4.60
+Accessories Mini Backpack,Small casual backpack,Accessories,1999,https://picsum.photos/seed/a16/400,35,Wildcraft,4.30
+Accessories Makeup Kit,Essential cosmetics set,Accessories,2299,https://picsum.photos/seed/a17/400,20,Maybelline,4.55
+Accessories Ring,Silver adjustable ring,Accessories,499,https://picsum.photos/seed/a18/400,80,Forever 21,4.20
+Accessories Scarf Ring,Metal scarf holder ring,Accessories,299,https://picsum.photos/seed/a19/400,100,H&M,4.15
+Accessories Duffel Bag,Medium-sized duffel bag,Accessories,2499,https://picsum.photos/seed/a20/400,30,American Tourister,4.45
