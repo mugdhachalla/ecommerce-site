@@ -18,10 +18,10 @@ export default function Home(){
   return (
     <div>
       <section className="mb-8">
-        <div className="grid md:grid-cols-2 gap-6 items-center">
+        <div className="grid md:grid-cols-2 gap-6 items-center ">
           <div>
             <h1 className="text-3xl font-bold mb-2">Discover curated fashion</h1>
-            <p className="text-gray-600">Shop Men, Women & Accessories — handpicked collections.</p>
+            <p className="text-gray-600">Shop Men, Women & Accessories - handpicked collections.</p>
           </div>
           <div>
             <img src="https://picsum.photos/seed/hero/900/500" alt="hero" className="rounded-lg shadow" />

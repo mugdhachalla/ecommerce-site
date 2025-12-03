@@ -2,6 +2,10 @@ import React from 'react'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import CategoryPage from './pages/CategoryPage'
+import ProductPage from './pages/ProductPage'
+import Cart from './pages/Cart'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 export default function App(){
@@ -13,7 +17,11 @@ export default function App(){
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/category/:category" element={<CategoryPage />} />
-            {/* Add product route later: <Route path="/product/:id" element={<ProductPage/>} /> */}
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="*" element={<p>Page not found</p>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
       </div>

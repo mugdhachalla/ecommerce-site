@@ -1,0 +1,23 @@
+# Environment files
+backend/website/.env
+.env
+.env.local
+.env.*.local
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Node / frontend
+node_modules/
+dist/
+build/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+npm-debug.log
+yarn-error.log
