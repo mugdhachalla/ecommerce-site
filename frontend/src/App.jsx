@@ -5,7 +5,6 @@ import CategoryPage from './pages/CategoryPage'
 import ProductPage from './pages/ProductPage'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
-import Register from './pages/Register'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 export default function App(){
@@ -21,7 +20,6 @@ export default function App(){
             <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<p>Page not found</p>} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
       </div>

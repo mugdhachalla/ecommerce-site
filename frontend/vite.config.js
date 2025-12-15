@@ -5,12 +5,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:5000'  // proxy API requests to Flask backend
+      '/api': 'http://localhost:5000'  
     }
   },
-  base: '/static/frontend/',                // assets will be served from /static/frontend/
+  base: '/',                
   build: {
-    outDir: '../backend/website/static/frontend', // put built files in Flask static
+    outDir: '../backend/website/static/frontend', 
     emptyOutDir: true,
   }
 })

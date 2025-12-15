@@ -1,6 +1,7 @@
 # Environment files
 backend/website/.env
 .env
+.env*
 .env.local
 .env.*.local
 

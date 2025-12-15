@@ -17,17 +17,24 @@ export default function Home(){
 
   return (
     <div>
-      <section className="mb-8">
-        <div className="grid md:grid-cols-2 gap-6 items-center ">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Discover curated fashion</h1>
-            <p className="text-gray-600">Shop Men, Women & Accessories - handpicked collections.</p>
-          </div>
-          <div>
-            <img src="https://picsum.photos/seed/hero/900/500" alt="hero" className="rounded-lg shadow" />
+      <section className="relative mb-8">
+      <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden bg-[url('https://picsum.photos/seed/hero/1600/900')] bg-cover bg-center">
+        
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        <div className="relative z-10 h-full flex items-center">
+          <div className="max-w-6xl mx-auto px-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              Discover curated fashion
+            </h1>
+            <p className="text-gray-200 max-w-xl">
+              Shop Men, Women and Accessories with handpicked collections
+            </p>
           </div>
         </div>
+        </div>
       </section>
+
 
       <section>
         <h2 className="text-xl font-semibold mb-4">Featured products</h2>
