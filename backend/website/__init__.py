@@ -2,7 +2,6 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from website.seed import seed_products
 from dotenv import load_dotenv
 
 
@@ -15,13 +14,13 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-        "DATABASE_URL",
-        f"postgresql://{os.getenv('POSTGRES_USER')}:"
-        f"{os.getenv('POSTGRES_PASSWORD')}@"
-        f"{os.getenv('POSTGRES_HOST', 'localhost')}:"
-        f"{os.getenv('POSTGRES_PORT', '5432')}/"
-        f"{os.getenv('POSTGRES_DB')}"
-    )
+    "DATABASE_URL",
+    f"postgresql+psycopg://{os.getenv('POSTGRES_USER', 'postgres')}:"
+    f"{os.getenv('POSTGRES_PASSWORD')}@"
+    f"{os.getenv('POSTGRES_HOST', 'localhost')}:"
+    f"{os.getenv('POSTGRES_PORT', '5432')}/"
+    f"{os.getenv('POSTGRES_DB')}"
+)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     @app.cli.command("seed-db")
