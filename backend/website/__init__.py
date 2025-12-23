@@ -26,25 +26,27 @@ def create_app():
     # 1. Initialize database
     db.init_app(app)
 
-    # 2. Import models AFTER db.init_app
+    # 2. Import models
     from website import models
     from website.models import Product
 
-    # 3. Register CLI command 
+    # 3. Register CLI seed command
     @app.cli.command("seed-db")
     def seed_db():
         from website.seed import seed_products
         count = seed_products("sample_products.csv")
         print(f"Seeded {count} products")
 
-    # 4. Auto seed ONLY if DB is empty (development-safe)
+    # 4. Enforce startup contract
     with app.app_context():
+        db.create_all()
+
         if Product.query.count() == 0:
             from website.seed import seed_products
             seed_products("sample_products.csv")
-            print("Database auto-seeded")
+            print("Database auto seeded")
 
-    # 5. Register blueprints LAST
+    # 5. Register blueprints last
     from .views import views
     from .auth import auth
     app.register_blueprint(views, url_prefix="/")
