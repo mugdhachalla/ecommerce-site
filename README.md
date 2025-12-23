@@ -77,3 +77,12 @@ pip install -r backend/requirements.txt
 ```bash
 python main.py
 ```
+---
+
+## Database
+- PostgreSQL stores product related data
+- Sample tables contain product names, prices, descriptions, categories, and image URLs
+- pgAdmin is used to create, inspect, and manage tables
+- Picsum Photos URLs are stored in the database to simulate real product images.
+
+© 2025 Mugdha Challa. All rights reserved
