@@ -1,88 +1,124 @@
-# Full Stack Sample Ecommerce Project
+# Ecommerce Backend Application
 
-## Overview
+This repository contains the backend service for an ecommerce application built using Flask, PostgreSQL, and Docker.
 
-This repository contains a simple full stack application built for learning and experimentation purposes.  
-The project demonstrates how a modern frontend integrates with a lightweight backend and a relational database, using realistic sample data and images.
-
-The primary objective is to understand end to end flow rather than production scale optimization.
+The project is structured so that a fresh clone reaches a valid running state with minimal setup and without manual database intervention.
 
 ---
 
 ## Tech Stack
 
-### Frontend
-- React for component based UI development
-- Tailwind CSS for utility first styling
-- Vite as the frontend build and dev server
+1. Python  
+2. Flask  
+3. Flask SQLAlchemy  
+4. PostgreSQL  
+5. Docker and Docker Compose  
+6. pgAdmin  
 
-### Backend
-- Flask as a lightweight REST API layer
-
-### Database
-- PostgreSQL as the relational database
-- pgAdmin for database management and inspection
 
 ---
 
-## Features
+## Prerequisites
 
-- Product listing fetched from backend APIs
-- Individual product detail pages
-- Cart functionality using browser localStorage
-- Simple login UI 
-- Responsive UI using Tailwind
+Ensure the following are installed on your system.
 
----
-
-
-## Development Setup
-
-### Prerequisites
-- Node.js installed
-- Python installed
-- PostgreSQL installed
-- pgAdmin configured
+1. Python 3.10 or higher  
+2. Docker  
+3. Docker Compose  
+4. Git  
 
 ---
 
-### Frontend Setup
+## Environment Configuration
 
-1. Navigate to the frontend folder  
-2. Install dependencies  
+This project uses environment variables for configuration.
+
+An example file is provided.
+
+### Step 1 Create the environment file
+
+From the backend directory, rename the example file.
 
 ```bash
-npm install
+cp .env.example .env
+```
+Rename as .env
+Update values in .env if required.
+
+## Python Virtual Environment Setup
+A Python virtual environment is required to isolate dependencies.
+
+### Step 2: Create and activate the virtual environment
+
+From the backend directory.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+
 ```
 
-3. Start a development server
+### Step 3: Install python dependencies
+```bash
+pip install -r requirements.txt
+```
+## Database Setup Using Docker
+
+PostgreSQL and pgAdmin are managed using Docker.
+
+### Step 4: Start database services
+
+From the project root.
+```bash
+docker compose up
+```
+This starts PostgreSQL and pgAdmin containers.
+
+PostgreSQL runs on port 5432
+pgAdmin runs on port 5050
+
+## Running the Backend Application
+### Step 5: Start the Flask application
+
+From the backend directory with the virtual environment activated.
+```bash
+python3 main.py
+
+```
+On startup the application will:
+
+- Connect to PostgreSQL
+- Create database tables if they do not exist
+- Automatically seed product data if the database is empty
+- No manual seed command is required for development.
+
+## Database Seeding Behavior
+
+The application enforces a startup contract.
+If the products table is empty, initial data from the CSV file is inserted automatically.
+This guarantees that a fresh database always starts in a valid state.
+An optional CLI command is also available.
 
 ```bash
-npm run dev
+flask seed-db
 ```
+This can be used to reseed data manually if required.
 
-Frontend runs on the Vite development server and proxies API calls to Flask.
-
-### Backend Setup
-
-1. Create and activate a virtual python environment in backend folder
-2. Install dependencies
+## Verifying Data
+You can verify seeded data using PostgreSQL.
 ```bash
-pip install -r backend/requirements.txt
+SELECT COUNT(*) FROM products;
 ```
+A non zero count confirms successful seeding.
 
-3. Configure PostgreSQL connection details
+## Accessing pgAdmin
 
-4. Run flask server
-```bash
-python main.py
-```
----
+1. Open a browser at http://localhost:5050
+2. Login using credentials from .env
+3. Add a new server
+4. Use host name db
+5. Use port 5432
+6. Use username and password from .env
 
-## Database
-- PostgreSQL stores product related data
-- Sample tables contain product names, prices, descriptions, categories, and image URLs
-- pgAdmin is used to create, inspect, and manage tables
-- Picsum Photos URLs are stored in the database to simulate real product images.
+## License
 
-© 2025 Mugdha Challa. All rights reserved
+This project is intended for learning and development purposes.
