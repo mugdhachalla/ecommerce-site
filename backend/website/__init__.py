@@ -2,17 +2,32 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from website.seed import seed_products
+from dotenv import load_dotenv
+
+
 
 db = SQLAlchemy()
 
 def create_app():
+    load_dotenv()
+
     app = Flask(__name__)
     CORS(app)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-        'DATABASE_URL',
-        'postgresql://postgres:postgrespass@localhost:5432/ecommerce_db'
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
+        "DATABASE_URL",
+        f"postgresql://{os.getenv('POSTGRES_USER')}:"
+        f"{os.getenv('POSTGRES_PASSWORD')}@"
+        f"{os.getenv('POSTGRES_HOST', 'localhost')}:"
+        f"{os.getenv('POSTGRES_PORT', '5432')}/"
+        f"{os.getenv('POSTGRES_DB')}"
     )
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    @app.cli.command("seed-db")
+    def seed_db():
+        count = seed_products("website/sample_products.csv")
+        print(f"Seeded {count} products into database")
 
     db.init_app(app)
 
