@@ -18,6 +18,12 @@ Docker is used to manage database services and ensure a consistent development e
 
 
 ---
+## Project Status
+
+This project is under active development.  
+Additional features, improvements, and refinements are being continuously added as part of ongoing learning and iteration.
+
+---
 
 ## Prerequisites
 
