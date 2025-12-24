@@ -1,4 +1,4 @@
-# Ecommerce Backend Application
+# Ecommerce Application
 This repository contains a full stack ecommerce application consisting of a Flask based backend, a PostgreSQL database, and a React frontend styled using Tailwind CSS. 
 Docker is used to manage database services and ensure a consistent development environment.
 
