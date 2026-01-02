@@ -1,11 +1,12 @@
 # Environment files
 backend/website/.env
-.env
+backend/.env
 .env.local
 .env.*.local
 
 # Python
 backend/venv/
+backend/.venv
 __pycache__/
 *.py[cod]
 *.egg-info/
