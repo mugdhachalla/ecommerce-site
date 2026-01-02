@@ -2,12 +2,14 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from pathlib import Path
 from dotenv import load_dotenv
 
 db = SQLAlchemy()
 
 def create_app():
-    load_dotenv()
+    env_path = Path(__file__).resolve().parent / ".env"
+    load_dotenv(dotenv_path=env_path)
 
     app = Flask(__name__)
     CORS(app)
