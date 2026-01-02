@@ -1,20 +1,27 @@
-# Ecommerce Backend Application
+# Ecommerce Application
+This repository contains a full stack ecommerce application consisting of a Flask based backend, a PostgreSQL database, and a React frontend styled using Tailwind CSS. 
+Docker is used to manage database services and ensure a consistent development environment.
 
-This repository contains the backend service for an ecommerce application built using Flask, PostgreSQL, and Docker.
-
-The project is structured so that a fresh clone reaches a valid running state with minimal setup and without manual database intervention.
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 1. Python  
 2. Flask  
 3. Flask SQLAlchemy  
 4. PostgreSQL  
-5. Docker and Docker Compose  
-6. pgAdmin  
+5. React  
+6. Tailwind CSS  
+7. Docker and Docker Compose  
+8. pgAdmin  
 
+
+---
+## Project Status
+
+This project is under active development.  
+Additional features, improvements, and refinements are being continuously added as part of ongoing learning and iteration.
 
 ---
 
@@ -23,9 +30,10 @@ The project is structured so that a fresh clone reaches a valid running state wi
 Ensure the following are installed on your system.
 
 1. Python 3.10 or higher  
-2. Docker  
-3. Docker Compose  
-4. Git  
+2. Node.js and npm  
+3. Docker  
+4. Docker Compose  
+5. Git  
 
 ---
 
@@ -109,6 +117,23 @@ You can verify seeded data using PostgreSQL.
 SELECT COUNT(*) FROM products;
 ```
 A non zero count confirms successful seeding.
+
+## Frontend Setup
+
+The frontend is built using React and styled with Tailwind CSS.
+
+### Step 6: Install frontend dependencies
+
+From the frontend directory.
+```bash
+npm install
+```
+
+### Step 7: Start the frontend application
+```bash
+npm run dev
+```
+The frontend will start and communicate with the Flask backend through API endpoints.
 
 ## Accessing pgAdmin
 
