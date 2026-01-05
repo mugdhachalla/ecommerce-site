@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import api from "../api/client"
 
-export default function Login() {
+export default function Signup() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -13,17 +13,16 @@ export default function Login() {
     setError("")
 
     try {
-      const res = await api.post("/auth/login", { email, password })
-      localStorage.setItem("access_token", res.data.access_token)
-      navigate("/")
-    } catch {
-      setError("Invalid email or password")
+      await api.post("/auth/signup", { email, password })
+      navigate("/login")
+    } catch (err) {
+      setError(err.response?.data?.error || "Signup failed")
     }
   }
 
   return (
     <div className="p-8 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Login</h1>
+      <h1 className="text-2xl font-bold mb-6">Create Account</h1>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}
 
@@ -47,14 +46,14 @@ export default function Login() {
         />
 
         <button className="w-full bg-black text-white py-2">
-          Login
+          Sign Up
         </button>
       </form>
 
       <p className="text-sm text-center mt-4">
-        New here{" "}
-        <Link to="/signup" className="underline">
-          Create an account
+        Already have an account{" "}
+        <Link to="/login" className="underline">
+          Login
         </Link>
       </p>
     </div>

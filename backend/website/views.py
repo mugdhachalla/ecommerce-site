@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from website.models import Product
 from website import db
+from website.auth_middleware import token_required
 
 views = Blueprint('views', __name__)
 
@@ -39,3 +40,11 @@ def api_products():
 def api_product(product_id):
     p = Product.query.get_or_404(product_id)
     return jsonify(_serialize_product(p))
+
+@views.route("/auth/me", methods=["GET"])
+@token_required
+def get_current_user(current_user):
+    return jsonify({
+        "id": current_user.id,
+        "email": current_user.email
+    })

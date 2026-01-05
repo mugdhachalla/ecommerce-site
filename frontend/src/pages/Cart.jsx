@@ -1,38 +1,53 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import api from "../api/client"
 
 export default function CartPage() {
   const [cart, setCart] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const raw = localStorage.getItem('cart') || '[]'
-    try {
-      setCart(JSON.parse(raw))
-    } catch {
-      setCart([])
+    const token = localStorage.getItem("access_token")
+    if (!token) {
+      navigate("/login")
+      return
     }
-  }, [])
 
-  function updateQty(id, qty) {
+    api
+      .get("/cart")
+      .then(res => {
+        setCart(res.data.items || [])
+      })
+      .catch(err => {
+        if (err.response?.status === 401) {
+          navigate("/login")
+        }
+      })
+  }, [navigate])
+
+  function updateQty(productId, qty) {
     const updated = cart.map(item =>
-      item.id === id ? { ...item, qty: Math.max(1, qty) } : item
+      item.product_id === productId
+        ? { ...item, quantity: Math.max(1, qty) }
+        : item
     )
     setCart(updated)
-    localStorage.setItem('cart', JSON.stringify(updated))
   }
 
-  function removeItem(id) {
-    const updated = cart.filter(item => item.id !== id)
+  function removeItem(productId) {
+    const updated = cart.filter(item => item.product_id !== productId)
     setCart(updated)
-    localStorage.setItem('cart', JSON.stringify(updated))
   }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  )
 
   const formatMoney = v =>
-    new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR'
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR"
     }).format(Number(v || 0))
 
   if (cart.length === 0) {
@@ -57,11 +72,14 @@ export default function CartPage() {
         <div className="md:col-span-2 space-y-4">
           {cart.map(item => (
             <div
-              key={item.id}
+              key={item.product_id}
               className="flex gap-4 p-4 border rounded-lg items-center"
             >
               <img
-                src={item.image_url || `https://picsum.photos/seed/cart-${item.id}/120/120`}
+                src={
+                  item.image_url ||
+                  `https://picsum.photos/seed/cart-${item.product_id}/120/120`
+                }
                 alt={item.name}
                 className="w-24 h-24 object-cover rounded"
               />
@@ -76,15 +94,18 @@ export default function CartPage() {
                   <input
                     type="number"
                     min="1"
-                    value={item.qty}
+                    value={item.quantity}
                     onChange={e =>
-                      updateQty(item.id, Number(e.target.value))
+                      updateQty(
+                        item.product_id,
+                        Number(e.target.value)
+                      )
                     }
                     className="w-20 border rounded px-2 py-1"
                   />
 
                   <button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item.product_id)}
                     className="text-sm text-red-600 hover:underline"
                   >
                     Remove
@@ -93,7 +114,7 @@ export default function CartPage() {
               </div>
 
               <div className="font-medium">
-                {formatMoney(item.price * item.qty)}
+                {formatMoney(item.price * item.quantity)}
               </div>
             </div>
           ))}
@@ -112,7 +133,10 @@ export default function CartPage() {
             <span>{formatMoney(total)}</span>
           </div>
 
-          <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+          <button
+            onClick={() => navigate("/orders/place")}
+            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+          >
             Proceed to checkout
           </button>
 

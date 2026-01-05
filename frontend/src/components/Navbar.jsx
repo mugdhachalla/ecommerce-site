@@ -1,10 +1,27 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
   const [shopOpen, setShopOpen] = useState(false)
   const shopRef = useRef(null)
   const hoverTimeout = useRef(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token")
+    setIsLoggedIn(!!token)
+  }, [])
+
+  function handleLogout() {
+    localStorage.removeItem("access_token")
+    setIsLoggedIn(false)
+    navigate("/login")
+  }
+
+
 
   useEffect(() => {
     function handleOutsideClick(e) {
@@ -106,9 +123,49 @@ export default function Navbar() {
             View Cart
           </Link>
 
-          <Link to="/login" className="text-gray-700 hover:text-gray-900">
-            Login
+              <div className="relative">
+  <div
+    onClick={() => setOpen(!open)}
+    className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center cursor-pointer"
+  >
+    <span className="text-sm font-semibold">U</span>
+  </div>
+
+  {open && (
+    <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow">
+      {isLoggedIn ? (
+        <>
+          <Link
+            to="/profile/edit"
+            onClick={() => setOpen(false)}
+            className="block px-4 py-2 text-sm hover:bg-gray-100"
+          >
+            Update Profile
           </Link>
+
+          <button
+            onClick={() => {
+              setOpen(false)
+              handleLogout()
+            }}
+            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <Link
+          to="/login"
+          onClick={() => setOpen(false)}
+          className="block px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Login
+        </Link>
+      )}
+    </div>
+  )}
+</div>
+
         </nav>
       </div>
     </header>

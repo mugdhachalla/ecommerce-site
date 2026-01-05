@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import api from "../api/client"
+import { useNavigate } from "react-router-dom"
+
 
 export default function ProductPage() {
   const { id } = useParams()
@@ -32,27 +35,32 @@ export default function ProductPage() {
     return ()=> { mounted = false }
   },[id])
 
-  function addToCart(){
-    if(!product || product.stock <= 0) return
-    const raw = localStorage.getItem('cart') || '[]'
-    let cart = []
-    try { cart = JSON.parse(raw) } catch(e){ cart = [] }
-    const existing = cart.find(i => i.id === product.id)
-    if(existing){
-      existing.qty = Math.min((existing.qty || 0) + qty, product.stock || 9999)
-    }else{
-      cart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image_url: product.image_url,
-        qty
-      })
-    }
-    localStorage.setItem('cart', JSON.stringify(cart))
-    setAdded(true)
-    setTimeout(()=>setAdded(false), 1800)
+  const navigate = useNavigate()
+
+async function addToCart() {
+  console.log("ADD TO CART CLICKED")
+
+  const token = localStorage.getItem("access_token")
+  console.log("TOKEN:", token)
+
+  if (!token) {
+    navigate("/login")
+    return
   }
+
+  try {
+    const res = await api.post("/cart/add", {
+      product_id: product.id,
+      quantity: qty
+    })
+    console.log("ADD TO CART RESPONSE:", res.data)
+    navigate("/cart")
+  } catch (err) {
+    console.error("ADD TO CART ERROR:", err)
+  }
+}
+
+
 
   const formatMoney = (v) => {
     try {

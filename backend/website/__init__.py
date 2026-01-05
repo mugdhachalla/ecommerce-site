@@ -23,6 +23,9 @@ def create_app():
         f"{os.getenv('POSTGRES_PORT', '5432')}/"
         f"{os.getenv('POSTGRES_DB')}"
     )
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev_secret_key")
+    app.config["JWT_ALGORITHM"] = "HS256"
+    app.config["JWT_EXP_MINUTES"] = 60
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -53,7 +56,13 @@ def create_app():
     # 5. Register blueprints last
     from .views import views
     from .auth import auth
+    from .cart import cart
+    from .orders import orders
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(cart)
+    app.register_blueprint(orders)
+
+
 
     return app

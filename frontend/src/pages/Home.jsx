@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard'
+import { useNavigate } from "react-router-dom";
+import api from "../api/client";
 
 export default function Home(){
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
 
   useEffect(()=>{
     fetch('/api/products')
@@ -14,6 +17,20 @@ export default function Home(){
       .catch(err=>console.error(err))
       .finally(()=>setLoading(false))
   },[])
+  const handleAddToCart = async (productId) => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    await api.post("/cart/add", {
+      product_id: productId,
+      quantity: 1
+    });
+    alert("Added to cart");
+
+  };
 
   return (
     <div>

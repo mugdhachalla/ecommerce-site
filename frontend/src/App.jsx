@@ -5,6 +5,8 @@ import CategoryPage from './pages/CategoryPage'
 import ProductPage from './pages/ProductPage'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
+import Signup from "./pages/Signup";
+import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 export default function App(){
@@ -17,8 +19,17 @@ export default function App(){
             <Route path="/" element={<Home />} />
             <Route path="/category/:category" element={<CategoryPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/cart"
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="*" element={<p>Page not found</p>} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </main>
