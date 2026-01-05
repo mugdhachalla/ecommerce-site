@@ -38,14 +38,20 @@ def signup():
 @auth.route("/auth/login", methods=["POST"])
 def login():
     data = request.get_json()
+    print("LOGIN RAW DATA:", data)
+
 
     email = data.get("email")
     password = data.get("password")
+    print("EMAIL RECEIVED:", email)
+    print("PASSWORD RECEIVED:", password)
+
 
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
 
     user = User.query.filter_by(email=email).first()
+    print("USER FOUND: ", user)
     if not user or not user.check_password(password):
         return jsonify({"error": "Invalid credentials"}), 401
 
@@ -64,4 +70,5 @@ def login():
     )
 
     return jsonify({"access_token": token}), 200
+
 

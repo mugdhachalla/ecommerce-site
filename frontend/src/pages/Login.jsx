@@ -1,12 +1,16 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import api from "../api/client"
+import { useAuth } from "../context/AuthContext"
+
 
 export default function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const { login } = useAuth()
+
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -14,7 +18,8 @@ export default function Login() {
 
     try {
       const res = await api.post("/auth/login", { email, password })
-      localStorage.setItem("access_token", res.data.access_token)
+      login(res.data.access_token)  
+
       navigate("/")
     } catch {
       setError("Invalid email or password")
@@ -51,8 +56,8 @@ export default function Login() {
         </button>
       </form>
 
-      <p className="text-sm text-center mt-4">
-        New here{" "}
+      <p className="text-xl text-center mt-4">
+        New here?{" "}
         <Link to="/signup" className="underline">
           Create an account
         </Link>

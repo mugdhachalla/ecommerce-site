@@ -8,6 +8,9 @@ import Login from './pages/Login'
 import Signup from "./pages/Signup";
 import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import OrderPlaced from "./pages/OrderPlaced"
+import OrderDetails from "./pages/OrderDetails"
+
 
 export default function App(){
   return (
@@ -31,6 +34,11 @@ export default function App(){
             <Route path="*" element={<p>Page not found</p>} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/orders/placed" element={<OrderPlaced />} />
+            <Route path="/orders/details" element={<OrderDetails />} />
+
+
+
           </Routes>
         </main>
       </div>

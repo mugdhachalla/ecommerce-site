@@ -55,3 +55,32 @@ def get_orders(current_user):
         })
 
     return jsonify({"orders": response})
+
+@orders.route("/orders/<int:order_id>", methods=["GET"])
+@token_required
+def get_order(current_user, order_id):
+    order = Order.query.get_or_404(order_id)
+    if order.user_id != current_user.id:
+        return jsonify({"error": "Not authorized to view this order"}), 403
+
+    items = [
+        {
+            "product_id": item.product_id,
+            "name": item.product.name,
+            "quantity": item.quantity,
+            "price": item.price_at_purchase
+        }
+        for item in order.items
+    ]
+
+    response = {
+        "order_id": order.id,
+        "created_at": order.created_at,
+        "items": items,
+    }
+
+    # compute total if not present
+    total = sum((item["price"] or 0) * (item["quantity"] or 0) for item in items)
+    response["total"] = float(total)
+
+    return jsonify({"order": response})

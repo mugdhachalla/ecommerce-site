@@ -54,7 +54,9 @@ async function addToCart() {
       quantity: qty
     })
     console.log("ADD TO CART RESPONSE:", res.data)
-    navigate("/cart")
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
+
   } catch (err) {
     console.error("ADD TO CART ERROR:", err)
   }

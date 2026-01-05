@@ -1,149 +1,128 @@
 # Ecommerce Application
-This repository contains a full stack ecommerce application consisting of a Flask based backend, a PostgreSQL database, and a React frontend styled using Tailwind CSS. 
-Docker is used to manage database services and ensure a consistent development environment.
+This repository contains a full stack ecommerce application with a Flask based backend, a PostgreSQL database, and a React + Vite frontend styled using Tailwind CSS.
+Docker is used to manage database services, while modern tooling is used to ensure a deterministic and reproducible development environment.
 
-
----
-
-# Tech Stack
-
-1. Python  
-2. Flask  
-3. Flask SQLAlchemy  
-4. PostgreSQL  
-5. React  
-6. Tailwind CSS  
-7. Docker and Docker Compose  
-8. pgAdmin  
-
+The project is designed for learning and is constantly being updated.
 
 ---
-## Project Status
+
+### Project Status
 
 This project is under active development.  
-Additional features, improvements, and refinements are being continuously added as part of ongoing learning and iteration.
+Features, refactors, and improvements are continuously added as part of structured learning and iteration.
+
+---
+
+## Tech stack
+
+- Backend: Python, Flask, Flask‑SQLAlchemy
+- Database: PostgreSQL (Docker)
+- Frontend: React + Vite, Tailwind CSS
+- Tooling: Docker / Docker Compose, pnpm 
 
 ---
 
 ## Prerequisites
 
-Ensure the following are installed on your system.
-
-1. Python 3.10 or higher  
-2. Node.js and npm  
-3. Docker  
-4. Docker Compose  
-5. Git  
+- Docker & Docker Compose
+- Git
+- Python 3.8+ (for backend)
+- Node.js and a package manager (pnpm) for frontend
 
 ---
 
-## Environment Configuration
+## Environment
 
-This project uses environment variables for configuration.
-
-An example file is provided.
-
-### Step 1 Create the environment file
-
-From the backend directory, rename the example file.
+Create a backend environment file from the example and edit values as needed:
 
 ```bash
+cd backend
 cp .env.example .env
+# then edit backend/.env or project .env to point DATABASE_URL to your Postgres
 ```
-Rename as .env
-Update values in .env if required.
 
-## Python Virtual Environment Setup
-A Python virtual environment is required to isolate dependencies.
+Minimum values to set (example):
 
-### Step 2: Create and activate the virtual environment
+```
+DATABASE_URL=postgresql://postgres:password@localhost:5432/ecommerce_db
+SECRET_KEY=your_secret_key
+```
 
-From the backend directory.
+---
+
+## Database (Docker)
+
+Start Postgres (and pgAdmin) used by the project:
+
 ```bash
-python3 -m venv venv
+docker compose up -d
+```
+
+Default service ports:
+- Postgres: 5432
+- pgAdmin: 5050
+
+Stop and remove containers:
+
+```bash
+docker compose down
+```
+
+To remove volumes (reset DB data):
+
+```bash
+docker compose down -v
+```
+
+---
+
+## Backend setup & run
+
+This repository uses `mise` and `uv` to provide a reproducible runtime and Python environment. Follow these steps from the project root.
+
+```bash
+mise install
+mise trust
+
+# create and activate a reproducible venv using uv
+cd backend
+uv venv
 source venv/bin/activate
 
+# install Python dependencies from lock (if available)
+uv pip install --lock
+
+# start the backend
+python main.py
 ```
 
-### Step 3: Install python dependencies
-```bash
-pip install -r requirements.txt
-```
-## Database Setup Using Docker
-
-PostgreSQL and pgAdmin are managed using Docker.
-
-### Step 4: Start database services
-
-From the project root.
-```bash
-docker compose up
-```
-This starts PostgreSQL and pgAdmin containers.
-
-PostgreSQL runs on port 5432
-pgAdmin runs on port 5050
-
-## Running the Backend Application
-### Step 5: Start the Flask application
-
-From the backend directory with the virtual environment activated.
-```bash
-python3 main.py
-
-```
-On startup the application will:
-
-- Connect to PostgreSQL
-- Create database tables if they do not exist
-- Automatically seed product data if the database is empty
-- No manual seed command is required for development.
-
-## Database Seeding Behavior
-
-The application enforces a startup contract.
-If the products table is empty, initial data from the CSV file is inserted automatically.
-This guarantees that a fresh database always starts in a valid state.
-An optional CLI command is also available.
+Notes:
+- On first run the app creates database tables and will auto‑seed products if the products table is empty.
+- A CLI seed command is available if you prefer to seed manually:
 
 ```bash
 flask seed-db
 ```
-This can be used to reseed data manually if required.
 
-## Verifying Data
-You can verify seeded data using PostgreSQL.
+---
+
+## Frontend setup & run
+
+1. Install dependencies and start dev server:
+
 ```bash
-SELECT COUNT(*) FROM products;
+# optional: provision runtimes (mise) if config files exist
+
+cd frontend
+mise install
+mise trust
+pnpm install   
+pnpm dev      
 ```
-A non zero count confirms successful seeding.
+---
 
-## Frontend Setup
 
-The frontend is built using React and styled with Tailwind CSS.
-
-### Step 6: Install frontend dependencies
-
-From the frontend directory.
-```bash
-npm install
-```
-
-### Step 7: Start the frontend application
-```bash
-npm run dev
-```
-The frontend will start and communicate with the Flask backend through API endpoints.
-
-## Accessing pgAdmin
-
-1. Open a browser at http://localhost:5050
-2. Login using credentials from .env
-3. Add a new server
-4. Use host name db
-5. Use port 5432
-6. Use username and password from .env
 
 ## License
 
-This project is intended for learning and development purposes.
+This repository is provided for learning and development purposes.

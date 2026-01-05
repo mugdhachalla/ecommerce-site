@@ -13,6 +13,7 @@ export default function Signup() {
     setError("")
 
     try {
+
       await api.post("/auth/signup", { email, password })
       navigate("/login")
     } catch (err) {
@@ -50,8 +51,8 @@ export default function Signup() {
         </button>
       </form>
 
-      <p className="text-sm text-center mt-4">
-        Already have an account{" "}
+      <p className="text-xl text-center mt-4">
+        Already have an account?{" "}
         <Link to="/login" className="underline">
           Login
         </Link>

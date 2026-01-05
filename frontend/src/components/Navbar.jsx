@@ -1,45 +1,49 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useRef, useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 export default function Navbar() {
   const [shopOpen, setShopOpen] = useState(false)
-  const shopRef = useRef(null)
-  const hoverTimeout = useRef(null)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
+  const shopRef = useRef(null)
+  const profileRef = useRef(null)
+  const hoverTimeout = useRef(null)
+  const profileHoverTimeout = useRef(null)
+  const navigate = useNavigate()
 
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token")
-    setIsLoggedIn(!!token)
-  }, [])
+  const { isAuthenticated, logout } = useAuth()
 
   function handleLogout() {
-    localStorage.removeItem("access_token")
-    setIsLoggedIn(false)
+    logout()
+    setOpen(false)
     navigate("/login")
   }
-
-
 
   useEffect(() => {
     function handleOutsideClick(e) {
       if (shopRef.current && !shopRef.current.contains(e.target)) {
         setShopOpen(false)
       }
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setOpen(false)
+      }
     }
 
     function handleEsc(e) {
-      if (e.key === 'Escape') setShopOpen(false)
+      if (e.key === "Escape") {
+        setShopOpen(false)
+        setOpen(false)
+      }
     }
 
-    document.addEventListener('mousedown', handleOutsideClick)
-    document.addEventListener('keydown', handleEsc)
+    document.addEventListener("mousedown", handleOutsideClick)
+    document.addEventListener("keydown", handleEsc)
 
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick)
-      document.removeEventListener('keydown', handleEsc)
+      document.removeEventListener("mousedown", handleOutsideClick)
+      document.removeEventListener("keydown", handleEsc)
+      if (hoverTimeout.current) clearTimeout(hoverTimeout.current)
+      if (profileHoverTimeout.current) clearTimeout(profileHoverTimeout.current)
     }
   }, [])
 
@@ -52,6 +56,17 @@ export default function Navbar() {
     hoverTimeout.current = setTimeout(() => {
       setShopOpen(false)
     }, 120)
+  }
+
+  const handleProfileMouseEnter = () => {
+    if (profileHoverTimeout.current) clearTimeout(profileHoverTimeout.current)
+    setOpen(true)
+  }
+
+  const handleProfileMouseLeave = () => {
+    profileHoverTimeout.current = setTimeout(() => {
+      setOpen(false)
+    }, 180)
   }
 
   const toggleShop = () => {
@@ -79,8 +94,6 @@ export default function Navbar() {
             <button
               type="button"
               onClick={toggleShop}
-              aria-haspopup="menu"
-              aria-expanded={shopOpen}
               className="flex items-center gap-1 text-gray-700 hover:text-gray-900"
             >
               Shop ▾
@@ -93,27 +106,14 @@ export default function Navbar() {
                   ? "opacity-100 translate-y-0 pointer-events-auto"
                   : "opacity-0 -translate-y-1 pointer-events-none")
               }
-              role="menu"
             >
-              <Link
-                to="/category/Women"
-                className="block px-4 py-2 hover:bg-gray-50"
-                role="menuitem"
-              >
+              <Link to="/category/Women" className="block px-4 py-2 hover:bg-gray-50">
                 Women
               </Link>
-              <Link
-                to="/category/Men"
-                className="block px-4 py-2 hover:bg-gray-50"
-                role="menuitem"
-              >
+              <Link to="/category/Men" className="block px-4 py-2 hover:bg-gray-50">
                 Men
               </Link>
-              <Link
-                to="/category/Accessories"
-                className="block px-4 py-2 hover:bg-gray-50"
-                role="menuitem"
-              >
+              <Link to="/category/Accessories" className="block px-4 py-2 hover:bg-gray-50">
                 Accessories
               </Link>
             </div>
@@ -123,49 +123,53 @@ export default function Navbar() {
             View Cart
           </Link>
 
-              <div className="relative">
-  <div
-    onClick={() => setOpen(!open)}
-    className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center cursor-pointer"
-  >
-    <span className="text-sm font-semibold">U</span>
-  </div>
-
-  {open && (
-    <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow">
-      {isLoggedIn ? (
-        <>
-          <Link
-            to="/profile/edit"
-            onClick={() => setOpen(false)}
-            className="block px-4 py-2 text-sm hover:bg-gray-100"
+          {/* Profile dropdown */}
+          <div
+            ref={profileRef}
+            className="relative"
+            onMouseEnter={handleProfileMouseEnter}
+            onMouseLeave={handleProfileMouseLeave}
           >
-            Update Profile
-          </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(s => !s)}
+              aria-haspopup="menu"
+              aria-expanded={open}
+              className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center cursor-pointer transition-all duration-150"
+            >
+              <span className="text-sm font-semibold">U</span>
+            </button>
 
-          <button
-            onClick={() => {
-              setOpen(false)
-              handleLogout()
-            }}
-            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-          >
-            Logout
-          </button>
-        </>
-      ) : (
-        <Link
-          to="/login"
-          onClick={() => setOpen(false)}
-          className="block px-4 py-2 text-sm hover:bg-gray-100"
-        >
-          Login
-        </Link>
-      )}
-    </div>
-  )}
-</div>
+            <div
+              className={
+                "absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg transition-all duration-150 " +
+                (open
+                  ? "opacity-100 translate-y-0 pointer-events-auto"
+                  : "opacity-0 -translate-y-1 pointer-events-none")
+              }
+              role="menu"
+              aria-label="Profile menu"
+            >
+              {isAuthenticated ? (
+                <>
+                  <Link to="/profile/edit" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                    Update Profile
+                  </Link>
 
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link to="/login" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                  Login
+                </Link>
+              )}
+            </div>
+          </div>
         </nav>
       </div>
     </header>

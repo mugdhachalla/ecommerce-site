@@ -26,17 +26,59 @@ export default function CartPage() {
   }, [navigate])
 
   function updateQty(productId, qty) {
-    const updated = cart.map(item =>
+  const safeQty = Math.max(1, qty)
+
+  setCart(prev =>
+    prev.map(item =>
       item.product_id === productId
-        ? { ...item, quantity: Math.max(1, qty) }
+        ? { ...item, quantity: safeQty }
         : item
     )
-    setCart(updated)
-  }
+  )
+
+  api.post("/cart/update", {
+    product_id: productId,
+    quantity: safeQty
+  }).catch(err => {
+    console.error("Update quantity failed", err)
+  })
+}
+
 
   function removeItem(productId) {
-    const updated = cart.filter(item => item.product_id !== productId)
-    setCart(updated)
+    api
+      .post('/cart/remove', { product_id: productId })
+      .then(() => {
+        setCart(cart =>
+          cart.filter(item => item.product_id !== productId)
+        )
+      })
+      .catch(err => {
+        console.error('Remove item failed', err)
+      })
+  }
+
+  async function handlePlaceOrder() {
+    const token = localStorage.getItem('access_token')
+
+    try {
+      if (token) {
+        // clear server cart and re-fetch to confirm
+        await api.post('/cart/clear')
+        const res = await api.get('/cart')
+        setCart(res.data.items || [])
+      } else {
+        // anonymous flow: clear local storage cart
+        try { localStorage.removeItem('cart') } catch (e) {}
+        setCart([])
+      }
+    } catch (err) {
+      console.error('Failed to clear cart', err)
+      // ensure UI shows empty cart to the user as best-effort
+      setCart([])
+    } finally {
+      navigate('/orders/placed')
+    }
   }
 
   const total = cart.reduce(
@@ -134,10 +176,10 @@ export default function CartPage() {
           </div>
 
           <button
-            onClick={() => navigate("/orders/place")}
+            onClick={handlePlaceOrder}
             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
           >
-            Proceed to checkout
+            Place Order
           </button>
 
           <Link
