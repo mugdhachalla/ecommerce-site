@@ -60,24 +60,31 @@ export default function CartPage() {
 
   async function handlePlaceOrder() {
     const token = localStorage.getItem('access_token')
+    if (!token) {
+      navigate('/login')
+      return
+    }
+
+    // ensure Authorization header for api client (axios)
+    if (api && api.defaults && api.defaults.headers) {
+      api.defaults.headers.common = api.defaults.headers.common || {}
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    }
 
     try {
-      if (token) {
-        // clear server cart and re-fetch to confirm
-        await api.post('/cart/clear')
-        const res = await api.get('/cart')
-        setCart(res.data.items || [])
-      } else {
-        // anonymous flow: clear local storage cart
-        try { localStorage.removeItem('cart') } catch (e) {}
-        setCart([])
-      }
-    } catch (err) {
-      console.error('Failed to clear cart', err)
-      // ensure UI shows empty cart to the user as best-effort
+      // call backend to create the order
+      const res = await api.post('/orders/place')
+      const orderId = res.data.order_id || (res.data.order && res.data.order.order_id) || null
+
+      // server-side handler deletes cart items; ensure UI cleared
       setCart([])
-    } finally {
-      navigate('/orders/placed')
+
+      // navigate to order placed page, pass orderId in state
+      navigate('/orders/placed', { state: { orderId, order: res.data.order || null } })
+    } catch (err) {
+      console.error('Failed to place order', err)
+      // fallback: do not clear cart, alert user
+      alert('Failed to place order. Please try again.')
     }
   }
 

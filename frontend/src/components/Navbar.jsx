@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { FaUser } from 'react-icons/fa'
 
 export default function Navbar() {
   const [shopOpen, setShopOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const shopRef = useRef(null)
   const profileRef = useRef(null)
+  const [profileImage, setProfileImage] = useState(null)
+  const [initials, setInitials] = useState('U')
   const hoverTimeout = useRef(null)
   const profileHoverTimeout = useRef(null)
   const navigate = useNavigate()
@@ -44,6 +47,31 @@ export default function Navbar() {
       document.removeEventListener("keydown", handleEsc)
       if (hoverTimeout.current) clearTimeout(hoverTimeout.current)
       if (profileHoverTimeout.current) clearTimeout(profileHoverTimeout.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      const img = localStorage.getItem('profile_image')
+      if (img) {
+        setProfileImage(img)
+        return
+      }
+
+      const rawUserEmail = localStorage.getItem('user_email') || localStorage.getItem('user')
+      let init = 'U'
+      if (rawUserEmail) {
+        try {
+          const parsed = JSON.parse(rawUserEmail)
+          const identifier = parsed.email || parsed.name || rawUserEmail
+          init = identifier.split('@')[0].split(/[^A-Za-z0-9]/).map(s => s[0]).slice(0,2).join('').toUpperCase() || 'U'
+        } catch {
+          init = (rawUserEmail.split('@')[0][0] || 'U').toUpperCase()
+        }
+      }
+      setInitials(init)
+    } catch (e) {
+      // ignore
     }
   }, [])
 
@@ -135,9 +163,13 @@ export default function Navbar() {
               onClick={() => setOpen(s => !s)}
               aria-haspopup="menu"
               aria-expanded={open}
-              className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center cursor-pointer transition-all duration-150"
+              className="w-9 h-9 rounded-full bg-gray-800 text-white flex items-center justify-center cursor-pointer transition-all duration-150 overflow-hidden"
             >
-              <span className="text-sm font-semibold">U</span>
+              {profileImage ? (
+                <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <FaUser className="w-5 h-5 text-white" aria-hidden="true" />
+              )}
             </button>
 
             <div
@@ -152,8 +184,8 @@ export default function Navbar() {
             >
               {isAuthenticated ? (
                 <>
-                  <Link to="/profile/edit" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm hover:bg-gray-100">
-                    Update Profile
+                  <Link to="/orders/view" onClick={() => setOpen(false)} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                    View Orders
                   </Link>
 
                   <button

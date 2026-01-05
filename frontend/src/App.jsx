@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import OrderPlaced from "./pages/OrderPlaced"
 import OrderDetails from "./pages/OrderDetails"
+import Orders from './pages/Orders'
 
 
 export default function App(){
@@ -31,11 +32,18 @@ export default function App(){
               }
             />
 
+            <Route path="/orders/view" element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            } />
+
             <Route path="*" element={<p>Page not found</p>} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/orders/placed" element={<OrderPlaced />} />
-            <Route path="/orders/details" element={<OrderDetails />} />
+            <Route path="/orders/:id" element={<OrderDetails />} />
+            <Route path="/orders" element={<Orders/>} />
 
 
 
