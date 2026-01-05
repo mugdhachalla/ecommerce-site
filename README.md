@@ -21,7 +21,31 @@ Features, refactors, and improvements are continuously added as part of structur
 - Tooling: Docker / Docker Compose, pnpm 
 
 ---
+## Features
 
+- Product catalog
+  - Category listing and individual product pages
+  - Product metadata (price, images, stock)
+- Shopping cart (server-backed)
+  - Add / update / remove items
+  - Endpoints: POST /cart/add, POST /cart/update, POST /cart/remove, GET /cart, POST /cart/clear
+  - Cart persisted per authenticated user (server-side); frontend keeps UI state in sync
+- Authentication
+  - Signup / Login using JWT tokens
+  - Protected routes for cart, orders and profile actions
+- Orders
+  - Place orders via POST /orders/place
+  - List and view order details: GET /orders and GET /orders/:id
+  - Order confirmation page (OrderPlaced) and OrderDetails view
+- Frontend
+  - React + Vite single-page app
+  - Tailwind CSS for styling and responsive UI
+- Developer tooling & reproducibility
+  - Docker Compose for Postgres and pgAdmin
+  - mise + uv for reproducible runtime & Python environment
+  - pnpm for frontend package management
+
+---
 ## Prerequisites
 
 - Docker & Docker Compose
