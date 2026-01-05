@@ -8,9 +8,8 @@ from dotenv import load_dotenv
 db = SQLAlchemy()
 
 def create_app():
-    env_path = Path(__file__).resolve().parent.parent / ".env"
+    env_path = Path(__file__).resolve().parent / ".env"
     load_dotenv(dotenv_path=env_path)
-    
 
     app = Flask(__name__)
     CORS(app)
@@ -31,7 +30,6 @@ def create_app():
 
     # 1. Initialize database
     db.init_app(app)
-
 
     # 2. Import models
     from website import models
