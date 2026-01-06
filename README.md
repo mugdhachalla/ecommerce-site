@@ -102,25 +102,56 @@ docker compose down -v
 
 ## Backend setup & run
 
-This repository uses `mise` and `uv` to provide a reproducible runtime and Python environment. Follow these steps from the project root.
+This project uses **mise** for runtime version management and **uv** for modern, reproducible Python dependency management.
+
+The frontend and backend each have their **own `mise.toml` file**, allowing them to manage tool versions independently.
+
+Follow these steps from the **project root**.
+
+---
+
+### 1. Install and trust tool versions
 
 ```bash
 mise install
 mise trust
+```
+This reads the nearest mise.toml files and installs the required runtimes.
+The backend and frontend runtimes are managed separately.
 
-# create and activate a reproducible venv using uv
+### 2. Create and activate a uv managed virtual environment
+```bash
 cd backend
 uv venv
 source .venv/bin/activate
+```
+The virtual environment is created at backend/.venv and is not tracked in Git.
 
-# install Python dependencies from lock (if available)
-uv pip install
+### 3. Install Python dependencies using uv
 
+If this is the first time setting up the backend or after dependencies change:
+```bash
+uv pip compile pyproject.toml -o uv.lock
+uv pip sync uv.lock
 
-# start the backend
+```
+On subsequent runs or fresh clones where uv.lock already exists:
+```bash
+uv pip sync uv.lock
+```
+This guarantees identical dependency versions across machines.
+
+### 4. Start the backend
+
+Ensure the PostgreSQL Docker containers are running before starting the backend server.
+Command to start the docker containers:
+```bash
+docker compose up -d
+```
+Start the backend:
+```bash
 python main.py
 ```
-
 Notes:
 - On first run the app creates database tables and will auto‑seed products if the products table is empty.
 - A CLI seed command is available if you prefer to seed manually:
@@ -136,8 +167,6 @@ flask seed-db
 1. Install dependencies and start dev server:
 
 ```bash
-# optional: provision runtimes (mise) if config files exist
-
 cd frontend
 mise install
 mise trust
@@ -145,8 +174,6 @@ pnpm install
 pnpm dev      
 ```
 ---
-
-
 
 ## License
 
