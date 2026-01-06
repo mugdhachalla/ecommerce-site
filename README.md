@@ -111,10 +111,11 @@ mise trust
 # create and activate a reproducible venv using uv
 cd backend
 uv venv
-source venv/bin/activate
+source .venv/bin/activate
 
 # install Python dependencies from lock (if available)
-uv pip install --lock
+uv pip install
+
 
 # start the backend
 python main.py
