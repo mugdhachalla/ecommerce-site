@@ -65,14 +65,16 @@ cp .env.example .env
 # then edit backend/.env or project .env to point DATABASE_URL to your Postgres
 ```
 
-Minimum values to set (example):
+### Minimum environment configuration
+
+At a minimum, the backend requires the following environment variables to be set.
+
+```env
+DATABASE_URL=postgresql+psycopg://postgres:password@localhost:5432/ecommerce_db
+SECRET_KEY=change_this_to_a_secure_random_string
+
 
 ```
-DATABASE_URL=postgresql://postgres:password@localhost:5432/ecommerce_db
-SECRET_KEY=your_secret_key
-```
-
----
 
 ## Database (Docker)
 
