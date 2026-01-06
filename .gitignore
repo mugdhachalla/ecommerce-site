@@ -6,6 +6,7 @@ backend/website/.env
 
 # Python
 backend/venv/
+backend/.venv/
 __pycache__/
 *.py[cod]
 *.egg-info/
